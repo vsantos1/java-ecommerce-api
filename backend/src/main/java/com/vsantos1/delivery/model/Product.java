@@ -1,5 +1,6 @@
 package com.vsantos1.delivery.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,10 +20,12 @@ public class Product implements Serializable {
     private Boolean available;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
 
 
-    public Product(){}
+    public Product() {
+    }
 
     public UUID getId() {
         return id;

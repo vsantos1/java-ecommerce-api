@@ -39,7 +39,12 @@ public class ProductService implements ProductGateway {
 
     @Override
     public Page<Product> findAllWithQuery(Pageable pageable, ProductQueryFilter productQueryFilter) {
-        return this.productRepository.findProductsByNameOrDescriptionIgnoreCase(pageable, productQueryFilter.getName(), productQueryFilter.getDescription());
+
+        if (productQueryFilter != null) {
+            return this.productRepository.findProductsByNameOrDescriptionIgnoreCase(pageable, productQueryFilter.getName(), productQueryFilter.getDescription());
+
+        }
+        return this.productRepository.findAll(pageable);
     }
 
     @Override
@@ -54,9 +59,9 @@ public class ProductService implements ProductGateway {
 
     @Override
     public Product update(UUID id, ProductDTO productDTO) {
-        Category category = this.categoryService.findById(productDTO.getCategory().getId());
-        Product product = new Product();
-        productDTO.setCategory(category);
+        Product product = this.findById(id);
+
+        productDTO.setCategory(product.getCategory());
         mapper.map(productDTO, product);
 
         return this.productRepository.save(product);

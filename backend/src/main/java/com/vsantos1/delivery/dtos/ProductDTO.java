@@ -5,22 +5,26 @@ import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
 public class ProductDTO {
 
 
+    @NotNull
     private String name;
 
     private String imageUrl;
 
     private String description;
 
+    @NotNull
     private Double price;
 
     private Boolean available;
 
+    @NotNull
     private Category category;
 
 
