@@ -15,3 +15,8 @@ server:
   error:
     include-message: always
     include-stacktrace: never
+file:
+  upload:
+    cloud-name: ${CLOUD_NAME}
+    api-key: ${API_KEY}
+    api-secret: ${API_SECRET}

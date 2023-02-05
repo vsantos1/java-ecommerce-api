@@ -1,7 +1,6 @@
 package com.vsantos1.delivery.services;
 
 import com.vsantos1.delivery.dtos.ProductDTO;
-import com.vsantos1.delivery.model.Category;
 import com.vsantos1.delivery.model.Product;
 import com.vsantos1.delivery.repositories.ProductRepository;
 import com.vsantos1.delivery.repositories.filters.ProductQueryFilter;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -21,10 +21,13 @@ public class ProductService implements ProductGateway {
     private final CategoryService categoryService;
     private final ProductRepository productRepository;
 
-    public ProductService(ModelMapper mapper, CategoryService categoryService, ProductRepository productRepository) {
+    private final FileUploadService fileUploadService;
+
+    public ProductService(ModelMapper mapper, CategoryService categoryService, ProductRepository productRepository, FileUploadService fileUploadService) {
         this.mapper = mapper;
         this.categoryService = categoryService;
         this.productRepository = productRepository;
+        this.fileUploadService = fileUploadService;
     }
 
     @Override
@@ -52,7 +55,11 @@ public class ProductService implements ProductGateway {
         this.categoryService.findById(productDTO.getCategory().getId());
         Product product = new Product();
 
+
         mapper.map(productDTO, product);
+        var response = this.fileUploadService.upload(productDTO.getFile());
+        product.setImageUrl(response.get("secure_url").toString());
+
 
         return this.productRepository.save(product);
     }
@@ -62,7 +69,11 @@ public class ProductService implements ProductGateway {
         Product product = this.findById(id);
 
         productDTO.setCategory(product.getCategory());
+
+
         mapper.map(productDTO, product);
+        var response = this.fileUploadService.upload(productDTO.getFile());
+        product.setImageUrl(response.get("secure_url").toString());
 
         return this.productRepository.save(product);
     }

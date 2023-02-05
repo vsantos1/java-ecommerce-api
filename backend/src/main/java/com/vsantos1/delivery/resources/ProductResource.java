@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Locale;
@@ -46,13 +47,16 @@ public class ProductResource {
     }
 
     @PostMapping(value = "/products", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Product> create(@ModelAttribute @Valid ProductDTO productDTO) {
+    public ResponseEntity<Product> create(@ModelAttribute @Valid ProductDTO productDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
+        productDTO.setFile(file);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.execute(productDTO));
     }
 
 
-    @PutMapping(value = "/products/{product_id}")
-    public ResponseEntity<Product> update(@PathVariable("product_id") UUID id, @ModelAttribute ProductDTO productDTO) {
+    @PutMapping(value = "/products/{product_id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Product> update(@PathVariable("product_id") UUID id, @ModelAttribute ProductDTO productDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
+        productDTO.setFile(file);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.update(id, productDTO));
     }
 

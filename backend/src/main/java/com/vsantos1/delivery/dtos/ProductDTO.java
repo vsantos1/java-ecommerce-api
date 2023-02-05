@@ -1,13 +1,10 @@
 package com.vsantos1.delivery.dtos;
 
 import com.vsantos1.delivery.model.Category;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.UUID;
+import java.io.File;
 
 public class ProductDTO {
 
@@ -15,7 +12,7 @@ public class ProductDTO {
     @NotNull
     private String name;
 
-    private String imageUrl;
+    private MultipartFile file;
 
     private String description;
 
@@ -36,12 +33,13 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public String getDescription() {
