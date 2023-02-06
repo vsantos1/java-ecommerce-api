@@ -1,5 +1,6 @@
 package com.vsantos1.delivery.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +30,7 @@ public class User implements UserDetails, Serializable {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @Column(name = "account_non_expired")
@@ -61,6 +63,7 @@ public class User implements UserDetails, Serializable {
         return this.password;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return this.email;
@@ -86,14 +89,6 @@ public class User implements UserDetails, Serializable {
         return this.enabled;
     }
 
-    public List<String> getRoles() {
-        List<String> roles = new ArrayList<>();
-
-        for (Permission permission : this.permissions) {
-            roles.add(permission.getDescription());
-        }
-        return roles;
-    }
 
     public Long getId() {
         return id;
@@ -163,6 +158,7 @@ public class User implements UserDetails, Serializable {
         this.enabled = enabled;
     }
 
+    @JsonIgnore
     public List<Permission> getPermissions() {
         return permissions;
     }
