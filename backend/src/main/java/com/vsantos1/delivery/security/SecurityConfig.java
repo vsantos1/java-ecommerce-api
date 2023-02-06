@@ -4,6 +4,7 @@ import com.vsantos1.delivery.jwt.JwtAuthenticationFilter;
 import com.vsantos1.delivery.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -63,7 +64,9 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/v1/products").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/categories").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/products").permitAll()
+                .requestMatchers(HttpMethod.GET,"/v1/users/**").hasRole("ADMIN")
                 .requestMatchers("/v1/auth/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest()
