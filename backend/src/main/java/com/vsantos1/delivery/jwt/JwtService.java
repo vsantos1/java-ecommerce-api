@@ -21,7 +21,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String SECRET_KEY = "";
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L; // 1 YEAR
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 day
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

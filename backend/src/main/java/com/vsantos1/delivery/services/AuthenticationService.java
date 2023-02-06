@@ -5,11 +5,9 @@ import com.vsantos1.delivery.dtos.TokenDTO;
 import com.vsantos1.delivery.dtos.UserDTO;
 import com.vsantos1.delivery.jwt.JwtService;
 import com.vsantos1.delivery.model.User;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +15,7 @@ import java.util.Date;
 @Service
 public class AuthenticationService {
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365L; // 1 YEAR
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 day
 
     private final UserService userService;
 

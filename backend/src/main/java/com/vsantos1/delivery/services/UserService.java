@@ -21,7 +21,6 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PermissionRepository permissionRepository;
-
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper mapper;
 
@@ -41,10 +40,16 @@ public class UserService implements UserDetailsService {
 
             User user = new User();
             mapper.map(userDTO, user);
-            Permission userP = permissionRepository.findById(2L).orElseThrow(() -> new RuntimeException("Permission not found"));
+            Permission userPerm = permissionRepository.findByDescription("ROLE_USER");
             List<Permission> permissions = new ArrayList<>();
-            permissions.add(userP);
+            permissions.add(userPerm);
             user.setPermissions(permissions);
+
+            // TODO: change this to dynamic
+            user.setEnabled(true);
+            user.setAccountNonExpired(true);
+            user.setAccountNonLocked(true);
+            user.setCredentialsNonExpired(true);
             return userRepository.save(user);
 
         } catch (Exception e) {
