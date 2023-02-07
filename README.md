@@ -26,7 +26,6 @@
 - [x] [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - [x] [Maven](https://maven.apache.org/)
 - [x] [Docker](https://www.docker.com/)
-- 
 ## Features
 
 ### Database tables
